@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { X, Captions } from "lucide-react";
 import TrailerPlayer from "./TrailerPlayer";
 import { TMDB_API_OPTIONS } from "@/lib/utils";
-import audioDescription from "../assets/ad.png";
+import audioDescription from "../assets/AD.png";
 
 const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w1280";
 
