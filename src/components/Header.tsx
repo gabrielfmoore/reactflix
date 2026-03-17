@@ -67,7 +67,7 @@ const Header = () => {
               </button>
             </>
           ) : (
-            <SecondaryNavigationBar className="@container" />
+            <SecondaryNavigationBar />
           )}
         </div>
       </div>
