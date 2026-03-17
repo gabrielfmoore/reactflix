@@ -3,7 +3,7 @@ import { useState } from "react";
 import widePoster from "../assets/interstellar_poster_wide.webp";
 import { Play, Info } from "lucide-react";
 import MuteButton from "@/components/MuteButton";
-import SliderRow from "@/components/sliderRow";
+import SliderRow from "@/components/SliderRow";
 import MediaDetails from "@/components/MediaDetails";
 
 const Browse = () => {
