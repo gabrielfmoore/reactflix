@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Media } from "../types";
 import { TMDB_API_OPTIONS } from "../lib/utils";
 import InteractiveMediaCard from "../components/InteractiveMediaCard";
+import MediaDetails from "@/components/MediaDetails";
 
 export default function Search() {
   const [searchParams] = useSearchParams();
@@ -75,6 +76,7 @@ export default function Search() {
             ))}
         </div>
       )}
+      <MediaDetails />
     </div>
   );
 }

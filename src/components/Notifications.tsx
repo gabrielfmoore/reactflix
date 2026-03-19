@@ -6,16 +6,26 @@ export default function Notifications() {
   return (
     <div className="group relative">
       <button className="text-white px-[6px] pt-[2px] pb-[3px]">
-        <Bell size={22} className="scale-x-110 translate-y-1" />
+        <Bell
+          size={22}
+          className="scale-x-110 translate-y-1"
+          aria-label="notifications"
+        />
       </button>
-      <div className="absolute h-[40%] w-[40%] bg-red-600 rounded-full top-0 right-0 flex items-center justify-center text-[60%]">
+      <div
+        className="absolute h-[40%] w-[40%] bg-red-600 rounded-full top-0 right-0 flex items-center justify-center text-[60%]"
+        aria-label="1 new notification"
+      >
         1
       </div>
       <div className="hidden group-hover:block absolute top-full right-0 w-[410px]">
         <div className="flex justify-end pr-1.5 h-[25px] items-end">
           <FontAwesomeIcon
             icon={faCaretDown}
-            style={{ color: "rgb(255, 255, 255)", transform: "scaleX(-1.3) scaleY(-1.2)" }}
+            style={{
+              color: "rgb(255, 255, 255)",
+              transform: "scaleX(-1.3) scaleY(-1.2)",
+            }}
           />
         </div>
         <div className="w-full bg-white h-[2px] -mt-[4px]"></div>

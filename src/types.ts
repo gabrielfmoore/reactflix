@@ -12,7 +12,3 @@ export type Media = {
   genre_ids: number[];
   media_type?: string;
 };
-
-export type MediaListProps = {
-  mediaItems: Media[];
-};

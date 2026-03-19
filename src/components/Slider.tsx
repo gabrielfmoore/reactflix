@@ -4,9 +4,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 interface SliderProps {
   children: ReactNode;
   hideArrows?: boolean;
+  gap?: number;
 }
 
-export default function Slider({ children, hideArrows = false }: SliderProps) {
+export default function Slider({ children, hideArrows = false, gap = 4 }: SliderProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
@@ -40,7 +41,6 @@ export default function Slider({ children, hideArrows = false }: SliderProps) {
     if (!wrapper || !track) return;
     const firstCard = track.firstElementChild as HTMLElement | null;
     const cardWidth = firstCard?.offsetWidth ?? 200;
-    const gap = 4;
     const n = Math.max(1, Math.round(wrapper.clientWidth / (cardWidth + gap)));
     const amount = n * (cardWidth + gap);
     setOffset((prev) =>
@@ -67,8 +67,8 @@ export default function Slider({ children, hideArrows = false }: SliderProps) {
       <div ref={wrapperRef} className="overflow-x-clip overflow-y-visible">
         <div
           ref={trackRef}
-          className="flex gap-[4px] px-[4%] transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${offset}px)` }}
+          className="flex px-[4%] transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${offset}px)`, gap: `${gap}px` }}
         >
           {children}
         </div>

@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { X, Captions } from "lucide-react";
 import TrailerPlayer from "./TrailerPlayer";
+import MuteButton from "./MuteButton";
 import { TMDB_API_OPTIONS } from "@/lib/utils";
 import audioDescription from "../assets/AD.png";
 
@@ -19,6 +20,7 @@ export default function MediaDetails() {
   const [rating, setRating] = useState<string | null>(null);
   const [genres, setGenres] = useState<string[]>([]);
   const [overview, setOverview] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   function close() {
     setSearchParams({});
@@ -106,7 +108,7 @@ export default function MediaDetails() {
             {/* Close button */}
             <button
               onClick={close}
-              className="absolute top-5 right-5 z-10 bg-black/50 rounded-full p-1.5 hover:bg-black/80"
+              className="absolute top-5 right-5 z-10 bg-[#181818] rounded-full p-1.5"
             >
               <X className="text-white w-6 h-6" />
             </button>
@@ -116,10 +118,17 @@ export default function MediaDetails() {
               <TrailerPlayer
                 mediaId={Number(mediaId)}
                 mediaType={mediaType}
+              muted={isMuted}
                 className="-translate-y-[10%]"
                 onPlay={() => setIsTrailerPlaying(true)}
                 onEnd={() => setIsTrailerPlaying(false)}
               />
+              <div className="absolute right-[1.4em] bottom-[4em] text-white z-20">
+              <MuteButton
+                isMuted={isMuted}
+                onToggle={() => setIsMuted((m) => !m)}
+              />
+            </div>
               {/* Poster cover */}
               <div
                 className={`absolute inset-0 transition-opacity duration-1500 ${isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}
@@ -136,10 +145,10 @@ export default function MediaDetails() {
             {/* Your content below */}
             <div className="relative flex justify-between mt-[-3vw] py-4 px-[48px] bg-[#141414]">
               <div className="w-[64%] text-white">
-                <div className="flex items-center text-gray-400 text-[16px] font-thin gap-2 my-2">
+                <div className="flex flex-wrap items-center text-gray-400 text-[16px] font-thin gap-2 my-2">
                   <div>{year}</div>
-                  <div>{runtime}</div>
-                  <span className="flex items-center border border-gray-400 rounded-[2px] text-[10px] h-[15px] px-[4px] font-bold">
+                  <div className="text-nowrap">{runtime}</div>
+                  <span className="flex text-wrap items-center border border-gray-400 rounded-[2px] text-[10px] h-[15px] px-[4px] font-bold">
                     HD
                   </span>
                   <img

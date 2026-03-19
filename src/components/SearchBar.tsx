@@ -31,7 +31,9 @@ export default function SearchBar() {
   return (
     <div className="relative flex items-center text-white h-[100%]">
       <div className="absolute right-0 flex items-center">
+        <label htmlFor="search-input" className="sr-only">Search</label>
         <input
+          id="search-input"
           autoComplete="off"
           type="search"
           placeholder="Titles, people, genres"

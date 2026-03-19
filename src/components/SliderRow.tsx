@@ -8,12 +8,18 @@ interface SliderRowProps {
   title: string;
   endpoint: string;
   mediaType?: "movie" | "tv";
+  onCardActive?: (active: boolean) => void;
+  isMuted?: boolean;
+  onMuteToggle?: () => void;
 }
 
 export default function SliderRow({
   title,
   endpoint,
   mediaType = "movie",
+  onCardActive,
+  isMuted,
+  onMuteToggle,
 }: SliderRowProps) {
   const [items, setItems] = useState<Media[]>([]);
   const [hoveredCount, setHoveredCount] = useState(0);
@@ -21,6 +27,10 @@ export default function SliderRow({
   function handleHoverChange(hovered: boolean) {
     setHoveredCount((n) => Math.max(0, n + (hovered ? 1 : -1)));
   }
+
+  useEffect(() => {
+    onCardActive?.(hoveredCount > 0);
+  }, [hoveredCount > 0]);
 
   useEffect(() => {
     async function fetchItems() {
@@ -41,8 +51,8 @@ export default function SliderRow({
   if (items.length === 0) return null;
 
   return (
-    <div className="group/row relative z-0 my-[3vw] hover:z-10">
-      <h2 className="text-white text-[1.4vw] font-[500] px-[4%] mb-[0.5vw]">{title}</h2>
+      <div className={`group/row relative my-[3vw] ${hoveredCount > 0 ? 'z-10' : 'z-0'}`}>
+      <h2 className="text-white text-[12px] font-[500] px-[4%] mb-[0.5vw]">{title}</h2>
       <Slider hideArrows={hoveredCount > 0}>
         {items.map((item) => (
           <InteractiveMediaCard
@@ -50,6 +60,8 @@ export default function SliderRow({
             media={item}
             mediaType={mediaType}
             onHoverChange={handleHoverChange}
+            isMuted={isMuted}
+            onMuteToggle={onMuteToggle}
           />
         ))}
       </Slider>

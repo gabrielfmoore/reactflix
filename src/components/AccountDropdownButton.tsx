@@ -22,18 +22,22 @@ export default function AccountDropdownButton() {
     <div className="relative flex flex-col flex-shrink-0 mr-[-0.1em]"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+      }}
     >
       <div>
         <div className="flex">
-          <button className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
+          <button aria-label="account menu" className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
             G
           </button>
-          <button className={`hidden 3xl:block ml-1 transition-all duration-300 ${open ? "rotate-180" : "rotate-0"}`}>
+          <span aria-hidden="true" className={`hidden 3xl:block ml-1 transition-all duration-300 ${open ? "rotate-180" : "rotate-0"}`}>
             <FontAwesomeIcon
               icon={faCaretDown}
               style={{ color: "rgb(255, 255, 255)" }}
             />
-          </button>
+          </span>
         </div>
       </div>
       {open && (

@@ -12,12 +12,16 @@ interface InteractiveMediaCardProps {
   media: Media;
   mediaType?: "movie" | "tv";
   onHoverChange?: (hovered: boolean) => void;
+  isMuted?: boolean;
+  onMuteToggle?: () => void;
 }
 
 export default function InteractiveMediaCard({
   media,
   mediaType = "movie",
   onHoverChange,
+  isMuted = true,
+  onMuteToggle,
 }: InteractiveMediaCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
@@ -28,7 +32,6 @@ export default function InteractiveMediaCard({
   );
   const cardRef = useRef<HTMLDivElement>(null);
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [isMuted, setIsMuted] = useState(true);
   const [, setSearchParams] = useSearchParams();
 
   function handleMouseEnter() {
@@ -128,7 +131,7 @@ export default function InteractiveMediaCard({
           }`}
         >
           {/* Video / poster area */}
-          <div className="aspect-video relative overflow-hidden w-full h-[60%]">
+          <div className="aspect-video relative overflow-hidden w-full">
             <TrailerPlayer
               mediaId={media.id}
               mediaType={mediaType}
@@ -148,14 +151,15 @@ export default function InteractiveMediaCard({
                 />
               )}
             </div>
-            <div className="absolute right-[1.4em] top-[70%] text-white z-20">
+            <div className={`absolute right-[1.4em] bottom-[0.6em] text-white z-20 ${!isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}>
               <MuteButton
                 isMuted={isMuted}
-                onToggle={() => setIsMuted((m) => !m)}
+                onToggle={() => onMuteToggle?.()}
+                iconSize="0.75em"
               />
             </div>
             {/* Title overlay */}
-            <div className="absolute top-[10em] left-3 text-white font-bold text-sm drop-shadow-lg">
+            <div className="absolute bottom-[1em] left-[1.4em] text-white font-bold text-sm drop-shadow-lg">
               {title}
             </div>
           </div>
@@ -164,14 +168,18 @@ export default function InteractiveMediaCard({
           <div className="text-[cqw] px-[1.4em] pb-[0.6em] pt-[0.3em] flex flex-col h-[40%] justify-between">
             {/* Action buttons */}
             <div className="flex items-center ml-[0.3em]">
-              <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-pointer">
-                <Play fill="black" className="h-[1em] w-[1em] text-black " />
+              <button className="bg-white rounded-full h-[1.5em] w-[1.5em] flex items-center justify-center hover:bg-white/80 cursor-pointer">
+                <Play
+                  fill="black"
+                  stroke="none"
+                  className="h-[1em] w-[1em]"
+                />
               </button>
               <button
                 onClick={() => setSearchParams({ jbv: String(media.id) })}
-                className="border border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white ml-auto cursor-pointer"
+                className="border border-gray-400 rounded-full h-[1.5em] w-[1.5em] flex items-center justify-center hover:border-white ml-auto cursor-pointer"
               >
-                <ChevronDown className="text-white h-[1.4em] w-[1.4em]" />
+                <ChevronDown className="text-white pt-[0.25em] px-[0.25em] w-full h-full" />
               </button>
             </div>
 
@@ -183,9 +191,7 @@ export default function InteractiveMediaCard({
                 </span>
               )}
               {runtimeDisplay && (
-                <span className="font-thin">
-                  {runtimeDisplay}
-                </span>
+                <span className="font-thin">{runtimeDisplay}</span>
               )}
               <span className="border border-gray-400 text-[0.4em] px-[0.5em]">
                 HD
@@ -193,7 +199,7 @@ export default function InteractiveMediaCard({
             </div>
 
             {/* Genre tags */}
-            <div className="flex mb-[1em] items-center text-white text-sm font-thin">
+            <div className="flex mb-[2em] items-center text-white text-sm font-thin">
               Genre Tags • Quirky • Dark Comedy
             </div>
           </div>
