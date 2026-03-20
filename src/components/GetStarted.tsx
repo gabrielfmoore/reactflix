@@ -82,6 +82,56 @@ const GetStarted = () => {
             </div>
           </div>
           <TrendingNow />
+          <div className="mx-[4%] my-14 text-white/70 gap-4 text-[13px] flex flex-col font-thin bg-[#141414]">
+          <p className="font-normal text-white">Ready to watch? Enter your email to create or restart your membership.</p>
+            <form
+              className="flex justify-center items-center gap-2 justify-between w-full max-w-[650px] mx-auto "
+              onSubmit={(e) => e.preventDefault()}
+              aria-label="Sign up"
+            >
+              <label htmlFor="hero-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="hero-email"
+                type="email"
+                placeholder="Email address"
+                autoComplete="email"
+                className="flex-1 w-full px-4 py-[12px] border border-white/30 rounded-[3px]"
+              />
+              <button
+                type="submit"
+                className="bg-red-600 w-[45%] hover:bg-red-700 rounded-[3px] py-2 cursor-pointer text-xl font-extrabold inline-flex items-center gap-1 transition-all duration-300 shadow-2xl shadow-red-600/30 min-w-[160px] justify-center hover:shadow-red-600/20"
+              >
+                Get Started <ChevronRight aria-hidden="true" />
+              </button>
+            </form>
+            <div className="my-6">
+              Questions? Call <span className="underline">1-800-123-4567</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-10 underline gap-y-2">
+              <a href="">FAQ</a>
+              <a href="">Help Center</a>
+              <a href="">Account</a>
+              <a href="">Investor Relations</a>
+              <a href="">Jobs</a>
+              <a href="">Reactflix Shop</a>
+              <a href="">Redeem Gift Cards</a>
+              <a href="">Buy Gift Cards</a>
+              <a href="">Ways to Watch</a>
+              <a href="">Terms of Use</a>
+              <a href="">Privacy</a>
+              <a href="">Cookie Preferences</a>
+              <a href="">Corporate Information</a>
+              <a href="">Contact Us</a>
+              <a href="">Speed Test</a>
+              <a href="">Legal Notices</a>
+              <a href="">Only on Reactflix</a>
+              <a href="">Do Not Sell My Personal Information</a>
+              <a href="">Ad Choices</a>
+            </div>
+            <p className="text-[10px] ">This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="underline text-blue-800">Learn more.</span></p>
+          </div>
         </div>
       </div>
     </section>

@@ -132,6 +132,10 @@ a {
   background-color: var(--netflix-dark);
 }
 
+/* .footer-link {
+
+} */
+
 /* Hide scrollbar for mobile slider scroll */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
