@@ -60,7 +60,7 @@ const GetStarted = () => {
         aria-hidden="true"
       >
         <CurvedLine />
-        <div className="absolute top-full left-0 w-full bg-[#141414] pt-[40px]">
+        <div className="relative sm:absolute sm:top-full left-0 w-full bg-[#141414] pt-[40px]">
           <div className="h-15 bg-[#141414] flex items-center justify-center mb-40">
             <div className="@container relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50">
               <img
