@@ -77,13 +77,13 @@ const Browse = () => {
               voyage.
             </p>
             <div className="@container flex mt-[2vh] gap-[4%] h-[6vw] md:h-[4.5vw] w-[74%] md:w-[58%] lg:w-[40%] lg:h-[3.3vw] font-[600]">
-              <button className="flex-1 h-full flex justify-center items-center gap-[0.4em] px-[11%] bg-white text-black text-[8cqw] rounded hover:bg-white/70">
+              <button className="flex-1 h-full flex justify-center items-center gap-[0.4em] px-[11%] bg-white text-black text-[8cqw] rounded hover:bg-white/70 cursor-pointer">
                 <Play className="h-[1.8em] md:h-[1.1em] w-[1.8em] md:w-[1.1em]" fill="currentColor" stroke="none"/>
                 Play
               </button>
               <button
                 onClick={() => setSearchParams({ jbv: String(INTERSTELLAR_ID), type: "movie" })}
-                className="flex-1 h-full flex justify-center items-center gap-[0.4em] px-[10%] mr-[4em] bg-[#6d6d6e]/70 text-white whitespace-nowrap text-[8cqw] rounded hover:bg-[#6d6d6e]/30"
+                className="flex-1 h-full flex justify-center items-center gap-[0.4em] px-[10%] mr-[4em] bg-[#6d6d6e]/70 text-white whitespace-nowrap text-[8cqw] rounded hover:bg-[#6d6d6e]/30 cursor-pointer"
               >
                 <Info className="h-[1.7em] md:h-[1.5em] w-[1.7em] md:w-[1.5em]" />
                 More Info

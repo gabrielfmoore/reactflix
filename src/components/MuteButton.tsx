@@ -10,7 +10,7 @@ export default function MuteButton({ isMuted, onToggle, iconSize = "1em" }: Mute
   return (
     <button
       onClick={onToggle}
-      className="rounded-full border border-white/50 bg-transparent text-white/50 hover:bg-white/10 hover:border-white hover:text-white transition hover:text-white"
+      className="rounded-full border border-white/50 bg-transparent text-white/50 hover:bg-white/10 hover:border-white hover:text-white transition hover:text-white cursor-pointer"
       style={{ padding: `calc(${iconSize} * 0.5)` }}
       aria-label={isMuted ? "Unmute" : "Mute"}
     >

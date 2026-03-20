@@ -62,11 +62,11 @@ const GetStarted = () => {
         <CurvedLine />
         <div className="relative sm:absolute sm:top-full left-0 w-full bg-[#141414] pt-[40px]">
           <div className="h-15 bg-[#141414] flex items-center justify-center mb-40">
-            <div className="@container relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50">
+            <div className="@container relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50 hover:scale-[1.02] transition-[scale] duration-300">
               <img
                 src={popcorn}
                 alt=""
-                className="absolute h-[60px] w-auto top-[-44px] sm:top-2 sm:left-[-60px] "
+                className="absolute h-[60px] w-auto top-[-44px] sm:top-2 sm:left-[-54px] "
               />
               <div className="flex flex-col text-wrap sm:text-nowrap text-left mr-4">
                 <h1 className="text-xl font-bold">
@@ -76,7 +76,7 @@ const GetStarted = () => {
                   Get our most affordable, ad-supported plan.
                 </p>
               </div>
-              <button className="text-lg mt-1.5 text-nowrap px-[16px] py-[6px] bg-gray-700/80 rounded-sm">
+              <button className="text-lg mt-1.5 text-nowrap px-[16px] py-[6px] bg-gray-700/80 rounded-sm cursor-pointer hover:bg-gray-700/50 transition-colors duration-300">
                 Learn More
               </button>
             </div>
@@ -110,25 +110,25 @@ const GetStarted = () => {
               Questions? Call <span className="underline">1-800-123-4567</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mb-10 underline gap-y-2">
-              <a href="">FAQ</a>
-              <a href="">Help Center</a>
-              <a href="">Account</a>
-              <a href="">Investor Relations</a>
-              <a href="">Jobs</a>
-              <a href="">Reactflix Shop</a>
-              <a href="">Redeem Gift Cards</a>
-              <a href="">Buy Gift Cards</a>
-              <a href="">Ways to Watch</a>
-              <a href="">Terms of Use</a>
-              <a href="">Privacy</a>
-              <a href="">Cookie Preferences</a>
-              <a href="">Corporate Information</a>
-              <a href="">Contact Us</a>
-              <a href="">Speed Test</a>
-              <a href="">Legal Notices</a>
-              <a href="">Only on Reactflix</a>
-              <a href="">Do Not Sell My Personal Information</a>
-              <a href="">Ad Choices</a>
+              <div>FAQ</div>
+              <div>Help Center</div>
+              <div>Account</div>
+              <div>Investor Relations</div>
+              <div>Jobs</div>
+              <div>Reactflix Shop</div>
+              <div>Redeem Gift Cards</div>
+              <div>Buy Gift Cards</div>
+              <div>Ways to Watch</div>
+              <div>Terms of Use</div>
+              <div>Privacy</div>
+              <div>Cookie Preferences</div>
+              <div>Corporate Information</div>
+              <div>Contact Us</div>
+              <div>Speed Test</div>
+              <div>Legal Notices</div>
+              <div>Only on Reactflix</div>
+              <div>Do Not Sell My Personal Information</div>
+              <div>Ad Choices</div>
             </div>
             <p className="text-[10px] ">This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="underline text-blue-800">Learn more.</span></p>
           </div>
