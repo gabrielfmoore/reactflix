@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { Pencil, SendToBack, User, BadgeQuestionMark } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const profiles = [
   { name: "Gabriel", color: "bg-red-600" },
@@ -13,6 +13,7 @@ const profiles = [
 export default function AccountDropdownButton() {
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -24,16 +25,26 @@ export default function AccountDropdownButton() {
     return () => clearTimeout(id);
   }, []);
 
+  // Close on click/tap outside — reliable on both desktop and mobile
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [open]);
+
   return (
-    <div className="relative flex flex-col flex-shrink-0 mr-[-0.1em]"
+    <div ref={containerRef} className="relative flex flex-col flex-shrink-0 mr-[-0.1em]"
       onPointerEnter={(e) => { if (e.pointerType === 'mouse' && ready) setOpen(true); }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') setOpen(false); }}
-      onBlur={(e) => {
-        const container = e.currentTarget;
-        requestAnimationFrame(() => {
-          if (!container.contains(document.activeElement)) setOpen(false);
-        });
-      }}
     >
       <div>
         <div className="flex">
