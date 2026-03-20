@@ -41,7 +41,7 @@ export default function SearchBar() {
           onChange={handleSearchQueryChange}
           className={`pl-10 py-2 border text-white text-sm placeholder:text-gray-400 focus:outline-none overflow-hidden [&::-webkit-search-cancel-button]:hidden ${
             shouldShowSearch
-              ? "w-[calc(100vw-120px)] sm:w-64 border-white/50 focus:border-white bg-[#141414] transition-all duration-400 pr-8"
+              ? "w-64 border-white/50 focus:border-white bg-[#141414] transition-all duration-400 pr-8"
               : "w-10 border-transparent cursor-pointer"
           }`} 
           onFocus={() => setShouldShowSearch(true)}
