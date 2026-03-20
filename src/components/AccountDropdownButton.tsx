@@ -26,8 +26,8 @@ export default function AccountDropdownButton() {
 
   return (
     <div className="relative flex flex-col flex-shrink-0 mr-[-0.1em]"
-      onMouseEnter={() => { if (ready) setOpen(true); }}
-      onMouseLeave={() => setOpen(false)}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse' && ready) setOpen(true); }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setOpen(false); }}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
       }}
