@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Media } from "../types";
 import TrailerPlayer from "./TrailerPlayer";
-import { Play, ChevronDown } from "lucide-react";
+import { Play, ChevronDown, Check, Plus, ThumbsUp } from "lucide-react";
 import { TMDB_API_OPTIONS } from "../lib/utils";
 import MuteButton from "./MuteButton";
 
@@ -33,6 +33,8 @@ export default function InteractiveMediaCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [, setSearchParams] = useSearchParams();
+  const [isAdded, setIsAdded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   function handleMouseEnter() {
     hoverTimeout.current = setTimeout(async () => {
@@ -130,7 +132,6 @@ export default function InteractiveMediaCard({
                 : "left-1/2 -translate-x-1/2"
           }`}
         >
-          {/* Video / poster area */}
           <div className="aspect-video relative overflow-hidden w-full">
             <TrailerPlayer
               mediaId={media.id}
@@ -139,7 +140,7 @@ export default function InteractiveMediaCard({
               onPlay={() => setIsTrailerPlaying(true)}
               onEnd={() => setIsTrailerPlaying(false)}
             />
-            {/* Poster cover — fades out when trailer is playing */}
+            {/* Poster cover */}
             <div
               className={`absolute inset-0 transition-opacity duration-1500 ${isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}
             >
@@ -151,11 +152,13 @@ export default function InteractiveMediaCard({
                 />
               )}
             </div>
-            <div className={`absolute right-[1.4em] bottom-[0.6em] text-white z-20 ${!isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}>
+            <div
+              className={`absolute right-[1.4em] bottom-[0.6em] z-20 ${!isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}
+            >
               <MuteButton
                 isMuted={isMuted}
                 onToggle={() => onMuteToggle?.()}
-                iconSize="0.75em"
+                iconSize="1em"
               />
             </div>
             {/* Title overlay */}
@@ -164,26 +167,54 @@ export default function InteractiveMediaCard({
             </div>
           </div>
 
-          {/* Info section */}
           <div className="text-[cqw] px-[1.4em] pb-[0.6em] pt-[0.3em] flex flex-col h-[40%] justify-between">
-            {/* Action buttons */}
             <div className="flex items-center ml-[0.3em]">
-              <button className="bg-white rounded-full h-[1.5em] w-[1.5em] flex items-center justify-center hover:bg-white/80 cursor-pointer">
-                <Play
-                  fill="black"
-                  stroke="none"
-                  className="h-[1em] w-[1em]"
-                />
-              </button>
+              <div className="flex justify-between gap-2 ">
+                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-not-allowed">
+                  <Play
+                    fill="black"
+                    stroke="none"
+                    style={{ width: "1em", height: "1em" }}
+                  />
+                </button>
+                <button
+                  onClick={() => setIsAdded((a) => !a)}
+                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
+                >
+                  {isAdded ? (
+                    <Check
+                      style={{ width: "1em", height: "1em" }}
+                      strokeWidth={2}
+                    />
+                  ) : (
+                    <Plus
+                      style={{ width: "1em", height: "1em" }}
+                      strokeWidth={2}
+                    />
+                  )}
+                </button>
+                <button
+                  onClick={() => setIsLiked((a) => !a)}
+                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
+                >
+                  {isLiked ? (
+                    <ThumbsUp
+                      style={{ width: "0.75em", height: "0.75em" }}
+                      fill="white"
+                      strokeWidth={0}
+                    />
+                  ) : (
+                    <ThumbsUp style={{ width: "0.75em", height: "0.75em" }} />
+                  )}
+                </button>
+              </div>
               <button
                 onClick={() => setSearchParams({ jbv: String(media.id) })}
-                className="border border-gray-400 rounded-full h-[1.5em] w-[1.5em] flex items-center justify-center hover:border-white ml-auto cursor-pointer"
+                className="border border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white ml-auto cursor-pointer"
               >
                 <ChevronDown className="text-white pt-[0.25em] px-[0.25em] w-full h-full" />
               </button>
             </div>
-
-            {/* Meta */}
             <div className="flex items-center my-[1em] pl-[0.2em] gap-[0.4em] text-gray-400">
               {rating && (
                 <span className="border border-gray-400 font-thin px-[0.2em] pb-[0.1em] pt-[0.06em] leading-none">
@@ -197,8 +228,6 @@ export default function InteractiveMediaCard({
                 HD
               </span>
             </div>
-
-            {/* Genre tags */}
             <div className="flex mb-[2em] items-center text-white text-sm font-thin">
               Genre Tags • Quirky • Dark Comedy
             </div>

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { X, Captions } from "lucide-react";
+import { X, Captions, Play, Check, Plus, ThumbsUp } from "lucide-react";
 import TrailerPlayer from "./TrailerPlayer";
 import MuteButton from "./MuteButton";
 import { TMDB_API_OPTIONS } from "@/lib/utils";
@@ -20,7 +20,10 @@ export default function MediaDetails() {
   const [rating, setRating] = useState<string | null>(null);
   const [genres, setGenres] = useState<string[]>([]);
   const [overview, setOverview] = useState<string | null>(null);
+  const [cast, setCast] = useState<string[]>([]);
   const [isMuted, setIsMuted] = useState(true);
+  const [isAdded, setIsAdded] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   function close() {
     setSearchParams({});
@@ -37,8 +40,10 @@ export default function MediaDetails() {
     setRating(null);
     setGenres([]);
     setOverview(null);
+    setCast([]);
     const endpoint = mediaType === "tv" ? "tv" : "movie";
-    const append = mediaType === "tv" ? "content_ratings" : "release_dates";
+    const append =
+      mediaType === "tv" ? "content_ratings,credits" : "release_dates,credits";
     fetch(
       `https://api.themoviedb.org/3/${endpoint}/${mediaId}?append_to_response=${append}`,
       TMDB_API_OPTIONS,
@@ -49,6 +54,11 @@ export default function MediaDetails() {
         setTitle(data.title || data.name || null);
         setOverview(data.overview || null);
         setGenres((data.genres || []).map((g: { name: string }) => g.name));
+        setCast(
+          (data.credits?.cast || [])
+            .slice(0, 4)
+            .map((c: { name: string }) => c.name),
+        );
         if (mediaType === "tv") {
           const seasons = data.number_of_seasons;
           setRuntime(
@@ -118,17 +128,57 @@ export default function MediaDetails() {
               <TrailerPlayer
                 mediaId={Number(mediaId)}
                 mediaType={mediaType}
-              muted={isMuted}
+                muted={isMuted}
                 className="-translate-y-[10%]"
                 onPlay={() => setIsTrailerPlaying(true)}
                 onEnd={() => setIsTrailerPlaying(false)}
               />
-              <div className="absolute right-[1.4em] bottom-[4em] text-white z-20">
-              <MuteButton
-                isMuted={isMuted}
-                onToggle={() => setIsMuted((m) => !m)}
-              />
-            </div>
+              <div className="flex justify-between absolute right-[1.4em] bottom-[4em] left-[1.4em] z-20">
+              <div className="flex justify-between gap-2">
+                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-not-allowed">
+                  <Play
+                    fill="black"
+                    stroke="none"
+                    className="h-[1em] w-[1em]"
+                  />
+                </button>
+                <button
+                  onClick={() => setIsAdded((a) => !a)}
+                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
+                >
+                  {isAdded ? (
+                    <Check
+                      className="h-[1em] w-[1em] text-white"
+                      strokeWidth={2}
+                    />
+                  ) : (
+                    <Plus
+                      className="h-[1em] w-[1em] text-white"
+                      strokeWidth={2}
+                    />
+                  )}
+                </button>
+                <button
+                  onClick={() => setIsLiked((a) => !a)}
+                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
+                >
+                  {isLiked ? (
+                    <ThumbsUp
+                      className="h-[0.7em] w-[1em] text-white"
+                      fill="white"
+                    />
+                  ) : (
+                    <ThumbsUp className="h-[0.7em] w-[1em] text-white" />
+                  )}
+                </button>
+                </div>
+                <div className="text-white">
+                  <MuteButton
+                    isMuted={isMuted}
+                    onToggle={() => setIsMuted((m) => !m)}
+                  />
+                </div>
+              </div>
               {/* Poster cover */}
               <div
                 className={`absolute inset-0 transition-opacity duration-1500 ${isTrailerPlaying ? "opacity-0 pointer-events-none delay-[2500ms]" : "opacity-100 delay-0"}`}
@@ -164,9 +214,14 @@ export default function MediaDetails() {
                 <div className="my-3 text-2xl">{title}</div>
                 <div className="text-sm font-thin">{overview}</div>
               </div>
-              <div className="w-[32%] mt-1 text-sm text-gray-500">
-                <div>Cast:</div>
-                <div>Genres: {genres.join(", ")}</div>
+              <div className="flex flex-col w-[32%] mt-1 text-sm text-gray-500 font-thin gap-4">
+                <div>
+                  Cast: <span className="text-white">{cast.join(", ")}</span>
+                </div>
+                <div>
+                  Genres:{" "}
+                  <span className="text-white">{genres.join(", ")}</span>
+                </div>
               </div>
             </div>
           </div>

@@ -27,8 +27,8 @@ export default function TrendingNow() {
   if (items.length === 0) return null;
 
   return (
-    <section aria-label="Trending Now" className="relative z-0 my-[3vw]">
-      <h2 className="text-white text-[1.4vw] font-[500] px-[4%] mb-[0.5vw]">
+    <section aria-label="Trending Now" className="top-full relative z-0 my-[3vw]">
+      <h2 className="text-white font-black text-lg sm:text-[1.4vw] font-[500] px-[4%] mb-2">
         Trending Now
       </h2>
       <Slider gap={30}>

@@ -12,7 +12,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const isAuthenticatedRoute =
+  const isLoggedIn =
     location.pathname === "/browse" || location.pathname === "/search";
 
   useEffect(() => {
@@ -27,24 +27,24 @@ const Header = () => {
   return (
     <header
       role="banner"
-      className={`${isAuthenticatedRoute ? "fixed" : "absolute"} top-0 left-0 right-0 z-[100] bg-[linear-gradient(180deg,rgba(0,0,0,.7)_10%,transparent)]`}
+      className={`${isLoggedIn ? "fixed" : "absolute"} top-0 left-0 right-0 z-[100] bg-[linear-gradient(180deg,rgba(0,0,0,.7)_10%,transparent)]`}
     >
       <div className={`absolute inset-0 bg-[#141414] transition-opacity pointer-events-none ${isScrolled ? 'opacity-100 duration-100' : 'opacity-0 duration-1000'}`} aria-hidden="true" />
       <nav aria-label="Main navigation" className="relative px-[4%] flex justify-between items-center text-white h-[41px] 3xl:h-[68px]">
         <div className="flex items-center justify-center gap-4">
-          <Link to={isAuthenticatedRoute ? "/browse" : "/"} tabIndex={isAuthenticatedRoute ? 0 : -1}>
+          <Link to={isLoggedIn ? "/browse" : "/"} tabIndex={isLoggedIn ? 0 : -1}>
             <img
               src={reactflixLogo}
               alt="Reactflix Logo"
-              className="h-[3.4vw] sm:h-[2.7vw] lg:h-[2vw] 3xl:h-[26px] w-auto"
+              className={`h-[3.4vw] sm:h-[2.7vw] lg:h-[2vw] 3xl:h-[26px] w-auto ${isLoggedIn ? "" : "h-[6vw]"}`}
             />
           </Link>
-          {isAuthenticatedRoute && <TabbedPrimaryNav />}
+          {isLoggedIn && <TabbedPrimaryNav />}
         </div>
         <div className="flex items-center gap-3">
-          {!isAuthenticatedRoute ? (
+          {!isLoggedIn ? (
             <>
-              <div className="flex items-center text-sm border border-white/50 rounded-[3px] px-2 py-1 relative">
+              <div className="flex items-center text-[12px] border border-white/50 rounded-[3px] px-2 py-1 relative">
               <label htmlFor="language-select" className="sr-only">Language</label>
                 <Languages className="h-4" aria-hidden="true" />
                 <select
@@ -63,7 +63,7 @@ const Header = () => {
                 />
               </div>
               <button
-                className="w- bg-red-600 hover:bg-red-700 border-0 rounded-[3px] px-5 py-1 cursor-pointer text-md font-extrabold inline-flex items-center gap-1 transition-all duration-300 ease-out shadow-2xl shadow-red-600/30 justify-center hover:shadow-red-600/20"
+                className="bg-red-600 hover:bg-red-700 border-0 rounded-[3px] px-[1em] py-1 cursor-pointer text-[12px] text-nowrap sm:text-md font-extrabold inline-flex items-center gap-1 transition-all duration-300 ease-out shadow-2xl shadow-red-600/30 justify-center hover:shadow-red-600/20"
                 onClick={() => navigate("/browse")}
                 aria-label="Sign in to Reactflix"
               >
