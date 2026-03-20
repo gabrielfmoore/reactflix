@@ -56,7 +56,7 @@ const GetStarted = () => {
         </div>
       </div>
       <div
-        className="relative mt-20 sm:mt-0 sm:absolute sm:bottom-[19px] left-0 w-full h-[20px] z-10"
+        className="relative mt-20 sm:mt-0 sm:absolute sm:bottom-[19px] left-0 w-full h-auto sm:h-[20px] z-10"
         aria-hidden="true"
       >
         <CurvedLine />
