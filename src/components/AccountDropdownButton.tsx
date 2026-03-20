@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { Pencil, SendToBack, User, BadgeQuestionMark } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const profiles = [
@@ -13,7 +13,6 @@ const profiles = [
 export default function AccountDropdownButton() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setOpen(false);
@@ -29,7 +28,7 @@ export default function AccountDropdownButton() {
     >
       <div>
         <div className="flex">
-          <button aria-label="account menu" onClick={() => setOpen((prev) => !prev)} className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
+          <button aria-label="account menu" onPointerUp={() => setOpen((prev) => !prev)} className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
             G
           </button>
           <span aria-hidden="true" className={`hidden 3xl:block ml-1 transition-all duration-300 ${open ? "rotate-180" : "rotate-0"}`}>
@@ -80,7 +79,7 @@ export default function AccountDropdownButton() {
               </button>
             </div>
             <div >
-              <Link to="/" onTouchEnd={(e) => { e.preventDefault(); navigate("/"); }} className="flex items-center justify-center h-12 text-white/85 hover:text-white font-thin">
+              <Link to="/" className="flex items-center justify-center h-12 text-white/85 hover:text-white font-thin">
                 Sign Out of Netflix
               </Link>
             </div>
