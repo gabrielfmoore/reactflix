@@ -64,8 +64,7 @@ const Header = () => {
               </div>
               <button
                 className="bg-red-600 hover:bg-red-700 border-0 rounded-[3px] px-[1em] py-1 cursor-pointer text-[12px] text-nowrap sm:text-md font-extrabold inline-flex items-center gap-1 transition-all duration-300 ease-out shadow-2xl shadow-red-600/30 justify-center hover:shadow-red-600/20"
-                onClick={() => navigate("/browse")}
-                onTouchEnd={(e) => { e.preventDefault(); navigate("/browse"); }}
+                onPointerUp={(e) => { e.preventDefault(); navigate("/browse"); }}
                 aria-label="Sign in to Reactflix"
               >
                 Sign In
