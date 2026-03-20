@@ -55,20 +55,18 @@ export default function Slider({ children, hideArrows = false, gap = 4 }: Slider
       {canScrollLeft && !hideArrows && (
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-0 bottom-0 z-20 bg-[#141414]/60 flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity cursor-pointer"
+          className="hidden sm:flex absolute left-0 top-0 bottom-0 z-20 bg-[#141414]/60 items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity cursor-pointer"
         >
           <ChevronLeft className="text-white" size={32} />
         </button>
       )}
 
-      {/* overflow-x: clip clips horizontally without creating a scroll container.
-          Unlike overflow-x: hidden, it does NOT force overflow-y to auto/clip,
-          so expanded hover cards can overflow vertically without being clipped. */}
-      <div ref={wrapperRef} className="overflow-x-clip overflow-y-visible">
+      {/* Mobile: native horizontal scroll. sm+: translateX with overflow-x-clip. */}
+      <div ref={wrapperRef} className="overflow-x-auto sm:overflow-x-clip overflow-y-visible scrollbar-hide">
         <div
           ref={trackRef}
-          className="flex px-[4%] transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${offset}px)`, gap: `${gap}px` }}
+          className="flex px-[4%] sm:transition-transform sm:duration-500 sm:ease-in-out"
+          style={{ '--slider-offset': `-${offset}px`, transform: undefined, gap: `${gap}px` } as React.CSSProperties}
         >
           {children}
         </div>
@@ -77,7 +75,7 @@ export default function Slider({ children, hideArrows = false, gap = 4 }: Slider
       {canScrollRight && !hideArrows && (
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-0 bottom-0 z-20 w-10 bg-[#141414]/60 flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity cursor-pointer"
+          className="hidden sm:flex absolute right-0 top-0 bottom-0 z-20 w-10 bg-[#141414]/60 items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity cursor-pointer"
         >
           <ChevronRight className="text-white" size={32} />
         </button>
