@@ -23,6 +23,7 @@ export default function SliderRow({
 }: SliderRowProps) {
   const [items, setItems] = useState<Media[]>([]);
   const [hoveredCount, setHoveredCount] = useState(0);
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   function handleHoverChange(hovered: boolean) {
     setHoveredCount((n) => Math.max(0, n + (hovered ? 1 : -1)));
@@ -62,6 +63,8 @@ export default function SliderRow({
             onHoverChange={handleHoverChange}
             isMuted={isMuted}
             onMuteToggle={onMuteToggle}
+            activeCardId={activeCardId}
+            onActivate={(id) => setActiveCardId(id)}
           />
         ))}
       </Slider>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Media } from "../types";
 import TrailerPlayer from "./TrailerPlayer";
@@ -14,6 +14,8 @@ interface InteractiveMediaCardProps {
   onHoverChange?: (hovered: boolean) => void;
   isMuted?: boolean;
   onMuteToggle?: () => void;
+  activeCardId?: number | null;
+  onActivate?: (id: number | null) => void;
 }
 
 export default function InteractiveMediaCard({
@@ -22,6 +24,8 @@ export default function InteractiveMediaCard({
   onHoverChange,
   isMuted = true,
   onMuteToggle,
+  activeCardId,
+  onActivate,
 }: InteractiveMediaCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
@@ -35,6 +39,28 @@ export default function InteractiveMediaCard({
   const [, setSearchParams] = useSearchParams();
   const [isAdded, setIsAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+
+  // Close this card if another card becomes active
+  useEffect(() => {
+    if (activeCardId !== null && activeCardId !== media.id && isHovered) {
+      handleMouseLeave();
+    }
+  }, [activeCardId]);
+
+  // Click-outside to close on mobile
+  const handleClickOutside = useCallback((e: MouseEvent | TouchEvent) => {
+    if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+      handleMouseLeave();
+      onActivate?.(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isHovered) {
+      document.addEventListener("pointerdown", handleClickOutside);
+      return () => document.removeEventListener("pointerdown", handleClickOutside);
+    }
+  }, [isHovered, handleClickOutside]);
 
   function handleMouseEnter() {
     hoverTimeout.current = setTimeout(async () => {
@@ -50,6 +76,7 @@ export default function InteractiveMediaCard({
       }
       setIsHovered(true);
       onHoverChange?.(true);
+      onActivate?.(media.id);
       try {
         const endpoint = mediaType === "tv" ? "tv" : "movie";
         const append = mediaType === "tv" ? "content_ratings" : "release_dates";
