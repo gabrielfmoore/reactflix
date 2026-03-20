@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { Pencil, SendToBack, User, BadgeQuestionMark } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const profiles = [
@@ -13,6 +13,7 @@ const profiles = [
 export default function AccountDropdownButton() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setOpen(false);
@@ -79,7 +80,7 @@ export default function AccountDropdownButton() {
               </button>
             </div>
             <div >
-              <Link to="/" className="flex items-center justify-center h-12 text-white/85 hover:text-white font-thin">
+              <Link to="/" onTouchEnd={(e) => { e.preventDefault(); navigate("/"); }} className="flex items-center justify-center h-12 text-white/85 hover:text-white font-thin">
                 Sign Out of Netflix
               </Link>
             </div>
