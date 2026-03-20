@@ -6,7 +6,9 @@ const SecondaryNavigationBar = ({ className }: { className?: string }) => {
   return (
     <div className={`flex items-center h-[30px] gap-2.5 ${className ?? ""}`}>
       <SearchBar />
-      <Notifications />
+      <div className="hidden sm:block">
+        <Notifications />
+      </div>
       <AccountDropdownButton />
     </div>
   );
