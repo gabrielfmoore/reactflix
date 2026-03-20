@@ -29,12 +29,15 @@ export default function AccountDropdownButton() {
       onPointerEnter={(e) => { if (e.pointerType === 'mouse' && ready) setOpen(true); }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') setOpen(false); }}
       onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+        const container = e.currentTarget;
+        requestAnimationFrame(() => {
+          if (!container.contains(document.activeElement)) setOpen(false);
+        });
       }}
     >
       <div>
         <div className="flex">
-          <button aria-label="account menu" onPointerUp={() => { if (ready) setOpen((prev) => !prev); }} className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
+          <button aria-label="account menu" onClick={() => { if (ready) setOpen((prev) => !prev); }} className="relative bg-red-600 h-[34px] w-[34px] rounded-[4px] text-white font-bold text-xl">
             G
           </button>
           <span aria-hidden="true" className={`hidden 3xl:block ml-1 transition-all duration-300 ${open ? "rotate-180" : "rotate-0"}`}>
