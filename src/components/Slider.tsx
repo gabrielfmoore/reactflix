@@ -12,6 +12,8 @@ export default function Slider({ children, hideArrows = false, gap = 4 }: Slider
   const trackRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
   const [maxOffset, setMaxOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<{ startX: number; startOffset: number; locked: boolean; startY: number } | null>(null);
 
   const canScrollLeft = offset > 0;
   const canScrollRight = offset < maxOffset - 1;
@@ -34,6 +36,37 @@ export default function Slider({ children, hideArrows = false, gap = 4 }: Slider
   useEffect(() => {
     setOffset((prev) => Math.min(prev, maxOffset));
   }, [maxOffset]);
+
+  // Touch drag handlers
+  function handleTouchStart(e: React.TouchEvent) {
+    dragRef.current = {
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      startOffset: offset,
+      locked: false,
+    };
+  }
+
+  function handleTouchMove(e: React.TouchEvent) {
+    const drag = dragRef.current;
+    if (!drag) return;
+    const dx = e.touches[0].clientX - drag.startX;
+    const dy = e.touches[0].clientY - drag.startY;
+    if (!drag.locked && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+      if (Math.abs(dy) > Math.abs(dx)) { dragRef.current = null; return; }
+      drag.locked = true;
+      setIsDragging(true);
+    }
+    if (drag.locked) {
+      e.preventDefault();
+      setOffset(Math.max(0, Math.min(maxOffset, drag.startOffset - dx)));
+    }
+  }
+
+  function handleTouchEnd() {
+    dragRef.current = null;
+    setIsDragging(false);
+  }
 
   function scroll(direction: "left" | "right") {
     const wrapper = wrapperRef.current;
@@ -61,12 +94,17 @@ export default function Slider({ children, hideArrows = false, gap = 4 }: Slider
         </button>
       )}
 
-      {/* Mobile: native horizontal scroll. sm+: translateX with overflow-x-clip. */}
-      <div ref={wrapperRef} className="overflow-x-auto sm:overflow-x-clip overflow-y-visible scrollbar-hide">
+      <div
+        ref={wrapperRef}
+        className="overflow-x-clip overflow-y-visible touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           ref={trackRef}
-          className="flex px-[4%] sm:transition-transform sm:duration-500 sm:ease-in-out"
-          style={{ '--slider-offset': `-${offset}px`, transform: undefined, gap: `${gap}px` } as React.CSSProperties}
+          className={`flex px-[4%] ${isDragging ? '' : 'transition-transform duration-500 ease-in-out'}`}
+          style={{ transform: `translateX(-${offset}px)`, gap: `${gap}px` }}
         >
           {children}
         </div>

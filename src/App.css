@@ -136,22 +136,6 @@ a {
 
 } */
 
-/* Hide scrollbar for mobile slider scroll */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Apply slider translateX only at sm+ */
-@media (min-width: 481px) {
-  [style*='--slider-offset'] {
-    transform: translateX(var(--slider-offset));
-  }
-}
-
 .netflix-gray {
   background-color: var(--netflix-gray);
 }
