@@ -162,7 +162,10 @@ export default function TrailerPlayer({
               if (event.data === 1 && !hasPlayedRef.current) {
                 hasPlayedRef.current = true;
                 if (duration) {
-                  setTimeout(() => onEndRef.current?.(), (duration - startTime - 1) * 1000);
+                  setTimeout(() => {
+                    playerRef.current?.pauseVideo?.();
+                    onEndRef.current?.();
+                  }, (duration - startTime - 1) * 1000);
                 }
                 setTimeout(() => onPlayRef.current?.(), 300);
               }

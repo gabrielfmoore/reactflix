@@ -3,6 +3,7 @@ import type { Media } from "../types";
 import Slider from "./Slider";
 import InteractiveMediaCard from "./InteractiveMediaCard";
 import { TMDB_API_OPTIONS } from "@/lib/utils";
+import SkeletonCard from "./SkeletonCard";
 
 interface SliderRowProps {
   title: string;
@@ -22,6 +23,7 @@ export default function SliderRow({
   onMuteToggle,
 }: SliderRowProps) {
   const [items, setItems] = useState<Media[]>([]);
+  const [loading, setLoading] = useState(true);
   const [hoveredCount, setHoveredCount] = useState(0);
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
@@ -44,12 +46,26 @@ export default function SliderRow({
         setItems(data.results || []);
       } catch (err) {
         console.error(`Failed to fetch ${endpoint}:`, err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchItems();
   }, [endpoint]);
 
-  if (items.length === 0) return null;
+  if (loading) {
+    return (
+      <div className="my-[3vw]">
+        <div className="h-4 w-32 bg-[#2f2f2f] animate-pulse rounded mx-[4%] mb-[0.5vw]" />
+        <Slider>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </Slider>
+      </div>
+    )
+  }
+    if (items.length === 0) return null;
 
   return (
       <div className={`group/row relative my-[3vw] ${hoveredCount > 0 ? 'z-10' : 'z-0'}`}>
