@@ -99,7 +99,7 @@ export default function TrailerPlayer({
         );
 
         const data = await response.json();
-        console.log("Trailer API response:", data); // Debug log
+        // Cleaned: removed debug console.log
 
         // Find official trailer, or any trailer, or any video from YouTube
         const trailer =
@@ -202,10 +202,6 @@ export default function TrailerPlayer({
   return (
     <div className={`w-full aspect-video relative ${className}`}>
       <div ref={containerRef} className="w-full h-full" />
-      {/* Cover YouTube top chrome */}
-      {/* <div className="absolute top-0 left-0 right-0 h-14 bg-[#141414] z-10 pointer-events-none" /> */}
-      {/* Cover YouTube bottom chrome */}
-      {/* <div className="absolute bottom-0 left-0 right-0 h-19 bg-[#141414] z-10 pointer-events-none" /> */}
       {/* Block iframe interaction */}
       <div className="absolute inset-0 z-20 pointer-events-auto" />
     </div>

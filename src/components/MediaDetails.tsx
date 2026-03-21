@@ -135,7 +135,7 @@ export default function MediaDetails() {
               />
               <div className="flex justify-between absolute right-[1.4em] bottom-[4em] left-[1.4em] z-20">
               <div className="flex justify-between gap-2">
-                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-not-allowed">
+                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-pointer">
                   <Play
                     fill="black"
                     stroke="none"
@@ -144,7 +144,7 @@ export default function MediaDetails() {
                 </button>
                 <button
                   onClick={() => setIsAdded((a) => !a)}
-                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
+                  className="border border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
                 >
                   {isAdded ? (
                     <Check
@@ -160,7 +160,7 @@ export default function MediaDetails() {
                 </button>
                 <button
                   onClick={() => setIsLiked((a) => !a)}
-                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
+                  className="border border-gray-400 rounded-full h-[2em] w-[2em] flex items-center justify-center hover:border-white cursor-pointer"
                 >
                   {isLiked ? (
                     <ThumbsUp

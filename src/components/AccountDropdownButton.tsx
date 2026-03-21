@@ -69,7 +69,7 @@ export default function AccountDropdownButton() {
               />
             </div>
           </div>
-          <div className="flex flex-col w-[220px] border border-white/40 border-[1px] bg-[#141414] text-white/85 text-[12px]">
+          <div className="flex flex-col w-[220px] border border-white/40 bg-[#141414] text-white/85 text-[12px]">
             <ul className="flex flex-col pt-[10px] pb-[5px] w-full text-[13px] font-thin">
               {profiles.map((p) => (
                 <li key={p.name} className="flex items-center gap-3 px-[10px] py-[6px] hover:underline cursor-pointer">

@@ -197,7 +197,7 @@ export default function InteractiveMediaCard({
           <div className="text-[cqw] px-[1.4em] pb-[0.6em] pt-[0.3em] flex flex-col h-[40%] justify-between">
             <div className="flex items-center ml-[0.3em]">
               <div className="flex justify-between gap-2 ">
-                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-not-allowed">
+                <button className="bg-white rounded-full h-[2em] w-[2em] flex items-center justify-center hover:bg-white/80 cursor-pointer">
                   <Play
                     fill="black"
                     stroke="none"
@@ -206,7 +206,7 @@ export default function InteractiveMediaCard({
                 </button>
                 <button
                   onClick={() => setIsAdded((a) => !a)}
-                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
+                  className="border border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
                 >
                   {isAdded ? (
                     <Check
@@ -222,7 +222,7 @@ export default function InteractiveMediaCard({
                 </button>
                 <button
                   onClick={() => setIsLiked((a) => !a)}
-                  className="border-1 border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
+                  className="border border-gray-400 rounded-full h-[2em] w-[2em] text-white flex items-center justify-center hover:border-white cursor-pointer"
                 >
                   {isLiked ? (
                     <ThumbsUp

@@ -45,7 +45,6 @@
 
   /* Netflix brand colors */
   --netflix-red: #e50914;
-  --netflix-redd: #360984;
   --netflix-red-hover: #f40612;
   --netflix-dark: #141414;
   --netflix-gray: #2f2f2f;
@@ -97,49 +96,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ===== TYPOGRAPHY ===== */
-/* h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 0;
-  color: var(--foreground);
-}
 
-h1 {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  line-height: 1.1;
-} */
 
 /* ===== INTERACTIVE ELEMENTS ===== */
 a {
   text-decoration: inherit;
 }
 
-/* ===== UTILITY CLASSES ===== */
-.netflix-red {
-  color: var(--netflix-red);
-}
-.netflix-bg {
-  background-color: var(--netflix-red);
-}
-.netflix-dark {
-  background-color: var(--netflix-dark);
-}
+/* Cleaned: removed unused .netflix-red, .netflix-bg, .netflix-dark, .netflix-gray,
+   .footer-link utility classes — no component references them */
 
-/* .footer-link {
-
-} */
-
-.netflix-gray {
-  background-color: var(--netflix-gray);
-}
-
+/* Currently unused in components — kept intentionally */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -161,35 +128,10 @@ a {
   display: none;
 }
 
-.group:hover .group-hover\:scale-110 {
-  transform: scale(1.1);
-}
+/* Cleaned: removed manual .group-hover\:scale-110, .transition-transform,
+   .duration-300 — Tailwind generates these utilities automatically */
 
-.transition-transform {
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-.duration-300 {
-  transition-duration: 300ms;
-}
-
-/* ===== ANIMATIONS ===== */
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Cleaned: removed logo-spin animation — no .logo class exists in the project */
 
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {

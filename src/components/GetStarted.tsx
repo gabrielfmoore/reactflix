@@ -62,13 +62,14 @@ const GetStarted = () => {
         <CurvedLine />
         <div className="relative sm:absolute sm:top-full left-0 w-full bg-[#141414] pt-[40px]">
           <div className="h-15 bg-[#141414] flex items-center justify-center mb-40">
-            <div className="@container relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50 hover:scale-[1.02] transition-[scale] duration-300">
+            <div className="@container group relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center hover:scale-[1.04] transition-[scale] duration-600">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50 group-hover:from-[#600c65]/50 group-hover:via-[#360984]/60 group-hover:to-[#06356c]/70 transition-all duration-600 rounded-lg" />
               <img
                 src={popcorn}
                 alt=""
                 className="absolute h-[60px] w-auto top-[-44px] sm:top-2 sm:left-[-54px] "
               />
-              <div className="flex flex-col text-wrap sm:text-nowrap text-left mr-4">
+              <div className="relative z-10 flex flex-col text-wrap sm:text-nowrap text-left mr-4">
                 <h1 className="text-xl font-bold">
                   The Netflix you love for just $7.99.
                 </h1>
@@ -76,14 +77,14 @@ const GetStarted = () => {
                   Get our most affordable, ad-supported plan.
                 </p>
               </div>
-              <button className="text-lg mt-1.5 text-nowrap px-[16px] py-[6px] bg-gray-700/80 rounded-sm cursor-pointer hover:bg-gray-700/50 transition-colors duration-300">
+              <button className="relative z-10 text-lg mt-1.5 text-nowrap px-[16px] py-[6px] bg-gray-700/80 rounded-sm cursor-pointer hover:bg-gray-700/50 transition-colors duration-600">
                 Learn More
               </button>
             </div>
           </div>
           <TrendingNow />
           <div className="mx-[4%] my-14 text-white/70 gap-4 text-[13px] flex flex-col font-thin bg-[#141414]">
-          <p className="font-normal text-white">Ready to watch? Enter your email to create or restart your membership.</p>
+          <p className="font-normal text-white text-center">Ready to watch? Enter your email to create or restart your membership.</p>
             <form
               className="flex justify-center items-center gap-2 justify-between w-full max-w-[650px] mx-auto "
               onSubmit={(e) => e.preventDefault()}
@@ -101,7 +102,7 @@ const GetStarted = () => {
               />
               <button
                 type="submit"
-                className="bg-red-600 w-[45%] hover:bg-red-700 rounded-[3px] py-2 cursor-pointer text-xl font-extrabold inline-flex items-center gap-1 transition-all duration-300 shadow-2xl shadow-red-600/30 min-w-[160px] justify-center hover:shadow-red-600/20"
+                className="text-white bg-red-600 w-[45%] hover:bg-red-700 rounded-[3px] py-2 cursor-pointer text-xl font-extrabold inline-flex items-center gap-1 transition-all duration-300 shadow-2xl shadow-red-600/30 min-w-[160px] justify-center hover:shadow-red-600/20"
               >
                 Get Started <ChevronRight aria-hidden="true" />
               </button>
@@ -130,7 +131,7 @@ const GetStarted = () => {
               <div>Do Not Sell My Personal Information</div>
               <div>Ad Choices</div>
             </div>
-            <p className="text-[10px] ">This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="underline text-blue-800">Learn more.</span></p>
+            <p className="text-[10px] text-center">This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="underline text-blue-800">Learn more.</span></p>
           </div>
         </div>
       </div>
