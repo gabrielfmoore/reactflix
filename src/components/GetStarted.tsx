@@ -60,7 +60,8 @@ const GetStarted = () => {
         aria-hidden="true"
       >
         <CurvedLine />
-        <div className="relative sm:absolute sm:top-full left-0 w-full bg-[#141414] pt-[40px]">
+        <div className="relative sm:absolute sm:top-full left-0 right-0 w-full bg-[#141414] pt-[40px]">
+          <div className="max-w-[1200px] mx-auto">
           <div className="h-15 bg-[#141414] flex items-center justify-center mb-40">
             <div className="@container group relative max-w-[700px] w-full px-4 py-6 mt-32 ml-[4%] sm:ml-[60px] mr-[4%] rounded-lg text-white flex flex-col sm:flex-row flex-wrap items-start justify-between text-center hover:scale-[1.04] transition-[scale] duration-600">
               <div className="absolute inset-0 bg-gradient-to-r from-[#600c65]/30 via-[#360984]/40 to-[#06356c]/50 group-hover:from-[#600c65]/50 group-hover:via-[#360984]/60 group-hover:to-[#06356c]/70 transition-all duration-600 rounded-lg" />
@@ -132,6 +133,7 @@ const GetStarted = () => {
               <div>Ad Choices</div>
             </div>
             <p className="text-[10px] text-center">This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className="underline text-blue-800">Learn more.</span></p>
+          </div>
           </div>
         </div>
       </div>

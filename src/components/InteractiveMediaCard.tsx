@@ -36,6 +36,8 @@ export default function InteractiveMediaCard({
   );
   const cardRef = useRef<HTMLDivElement>(null);
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeCooldown = useRef(false);
+  const touchMoved = useRef(false);
   const [, setSearchParams] = useSearchParams();
   const [isAdded, setIsAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -50,7 +52,9 @@ export default function InteractiveMediaCard({
 
 
   function handleMouseEnter() {
+    if (hoverTimeout.current || closeCooldown.current) return;
     hoverTimeout.current = setTimeout(async () => {
+      hoverTimeout.current = null;
       // Determine edge alignment before expanding
       const rect = cardRef.current?.getBoundingClientRect();
       if (rect) {
@@ -101,6 +105,9 @@ export default function InteractiveMediaCard({
 
   function handleMouseLeave() {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = null;
+    closeCooldown.current = true;
+    setTimeout(() => { closeCooldown.current = false; }, 400);
     setIsHovered(false);
     setIsTrailerPlaying(false);
     setRuntimeDisplay(null);
@@ -120,8 +127,10 @@ export default function InteractiveMediaCard({
       className="relative flex-shrink-0 w-[180px] sm:w-[calc((100%-4px)/2)] md:w-[calc((100%-8px)/3)] min-[800px]:w-[calc((100%-12px)/4)] 4xl:w-[calc((100%-16px)/5)] min-[1280px]:w-[calc((100%-20px)/6)]"
       onPointerEnter={(e) => { if (e.pointerType === 'mouse') handleMouseEnter(); }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') handleMouseLeave(); }}
+      onTouchStart={() => { touchMoved.current = false; }}
+      onTouchMove={() => { touchMoved.current = true; }}
       onTouchEnd={(e) => {
-        if (!isHovered) {
+        if (!isHovered && !touchMoved.current) {
           e.preventDefault();
           handleMouseEnter();
         }

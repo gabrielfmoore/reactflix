@@ -5,7 +5,7 @@ const CurvedLine = () => {
       height="100%" 
       viewBox="0 0 1000 100" 
       preserveAspectRatio="none"
-      className="block"
+      className="block scale-y-50 sm:scale-y-100 origin-bottom"
     >
       <defs>
         <linearGradient id="opacityGradient" x1="0%" y1="0%" x2="100%" y2="0%">
