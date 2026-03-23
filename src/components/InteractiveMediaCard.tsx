@@ -38,6 +38,7 @@ export default function InteractiveMediaCard({
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeCooldown = useRef(false);
   const touchMoved = useRef(false);
+  const backdropMoved = useRef(false);
   const [, setSearchParams] = useSearchParams();
   const [isAdded, setIsAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -136,6 +137,19 @@ export default function InteractiveMediaCard({
         }
       }}
     >
+      {isHovered && (
+        <div
+          className="fixed inset-0 z-[1] sm:hidden"
+          onTouchStart={() => { backdropMoved.current = false; }}
+          onTouchMove={() => { backdropMoved.current = true; }}
+          onTouchEnd={() => {
+            if (!backdropMoved.current) {
+              handleMouseLeave();
+              onActivate?.(null);
+            }
+          }}
+        />
+      )}
       {/* Base poster */}
       <div className="aspect-video rounded-sm overflow-hidden bg-[#2f2f2f]">
         {posterUrl ? (

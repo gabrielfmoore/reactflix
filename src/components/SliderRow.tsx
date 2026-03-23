@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import type { Media } from "../types";
 import Slider from "./Slider";
 import InteractiveMediaCard from "./InteractiveMediaCard";
@@ -35,13 +35,6 @@ export default function SliderRow({
     onCardActive?.(hoveredCount > 0);
   }, [hoveredCount > 0]);
 
-  function closeMobileCard() {
-    setActiveCardId(null);
-    setHoveredCount(0);
-  }
-
-  const backdropMoved = useRef(false);
-
   useEffect(() => {
     async function fetchItems() {
       try {
@@ -77,16 +70,6 @@ export default function SliderRow({
   return (
       <div className={`group/row relative my-[3vw] ${hoveredCount > 0 ? 'z-10' : 'z-0'}`}>
       <h2 className="text-white text-[12px] font-[500] px-[4%] mb-[0.5vw]">{title}</h2>
-      {hoveredCount > 0 && (
-        <div
-          className="fixed inset-0 z-[1] sm:hidden"
-          onTouchStart={() => { backdropMoved.current = false; }}
-          onTouchMove={() => { backdropMoved.current = true; }}
-          onTouchEnd={() => {
-            if (!backdropMoved.current) closeMobileCard();
-          }}
-        />
-      )}
       <Slider hideArrows={hoveredCount > 0}>
         {items.map((item) => (
           <InteractiveMediaCard
