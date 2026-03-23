@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Media } from "../types";
 import TrailerPlayer from "./TrailerPlayer";
@@ -16,7 +16,6 @@ interface InteractiveMediaCardProps {
   onMuteToggle?: () => void;
   activeCardId?: number | null;
   onActivate?: (id: number | null) => void;
-  isClosingRef?: React.RefObject<boolean>;
 }
 
 export default function InteractiveMediaCard({
@@ -27,7 +26,6 @@ export default function InteractiveMediaCard({
   onMuteToggle,
   activeCardId,
   onActivate,
-  isClosingRef,
 }: InteractiveMediaCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
@@ -42,27 +40,14 @@ export default function InteractiveMediaCard({
   const [isAdded, setIsAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
-  // Close this card if another card becomes active (desktop only — mouse hover switching)
+  // Close this card if another card becomes active or all cards are dismissed
   useEffect(() => {
-    if (activeCardId !== null && activeCardId !== media.id && isHovered) {
+    if (activeCardId !== media.id && isHovered) {
       handleMouseLeave();
     }
   }, [activeCardId]);
 
-  // Click-outside to close on mobile
-  const handleClickOutside = useCallback((e: MouseEvent | TouchEvent) => {
-    if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
-      handleMouseLeave();
-      onActivate?.(null);
-    }
-  }, []);
 
-  useEffect(() => {
-    if (isHovered) {
-      document.addEventListener("touchstart", handleClickOutside, true);
-      return () => document.removeEventListener("touchstart", handleClickOutside, true);
-    }
-  }, [isHovered, handleClickOutside]);
 
   function handleMouseEnter() {
     hoverTimeout.current = setTimeout(async () => {
@@ -136,7 +121,7 @@ export default function InteractiveMediaCard({
       onPointerEnter={(e) => { if (e.pointerType === 'mouse') handleMouseEnter(); }}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') handleMouseLeave(); }}
       onTouchEnd={(e) => {
-        if (!isHovered && !isClosingRef?.current) {
+        if (!isHovered) {
           e.preventDefault();
           handleMouseEnter();
         }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import type { Media } from "../types";
 import Slider from "./Slider";
 import InteractiveMediaCard from "./InteractiveMediaCard";
@@ -27,9 +27,6 @@ export default function SliderRow({
   const [hoveredCount, setHoveredCount] = useState(0);
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
-  // Shared gate: blocks card opens during same touch gesture that closed another
-  const isClosingRef = useRef(false);
-
   function handleHoverChange(hovered: boolean) {
     setHoveredCount((n) => Math.max(0, n + (hovered ? 1 : -1)));
   }
@@ -38,15 +35,10 @@ export default function SliderRow({
     onCardActive?.(hoveredCount > 0);
   }, [hoveredCount > 0]);
 
-  useEffect(() => {
-    if (hoveredCount <= 0) return;
-    const handleTouch = () => {
-      isClosingRef.current = true;
-      setTimeout(() => { isClosingRef.current = false; }, 50);
-    };
-    document.addEventListener("touchstart", handleTouch, true);
-    return () => document.removeEventListener("touchstart", handleTouch, true);
-  }, [hoveredCount > 0]);
+  function closeMobileCard() {
+    setActiveCardId(null);
+    setHoveredCount(0);
+  }
 
   useEffect(() => {
     async function fetchItems() {
@@ -83,6 +75,12 @@ export default function SliderRow({
   return (
       <div className={`group/row relative my-[3vw] ${hoveredCount > 0 ? 'z-10' : 'z-0'}`}>
       <h2 className="text-white text-[12px] font-[500] px-[4%] mb-[0.5vw]">{title}</h2>
+      {hoveredCount > 0 && (
+        <div
+          className="fixed inset-0 z-[1] sm:hidden"
+          onTouchEnd={(e) => { e.stopPropagation(); closeMobileCard(); }}
+        />
+      )}
       <Slider hideArrows={hoveredCount > 0}>
         {items.map((item) => (
           <InteractiveMediaCard
@@ -94,7 +92,6 @@ export default function SliderRow({
             onMuteToggle={onMuteToggle}
             activeCardId={activeCardId}
             onActivate={(id) => setActiveCardId(id)}
-            isClosingRef={isClosingRef}
           />
         ))}
       </Slider>

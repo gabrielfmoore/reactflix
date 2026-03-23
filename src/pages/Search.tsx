@@ -11,6 +11,7 @@ export default function Search() {
   const [results, setResults] = useState<Media[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     if (!query) {
@@ -71,6 +72,8 @@ export default function Search() {
                 <InteractiveMediaCard
                   media={media}
                   mediaType={media.media_type === "tv" ? "tv" : "movie"}
+                  isMuted={isMuted}
+                  onMuteToggle={() => setIsMuted((m) => !m)}
                 />
               </div>
             ))}
