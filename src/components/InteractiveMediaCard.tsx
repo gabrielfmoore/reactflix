@@ -16,6 +16,7 @@ interface InteractiveMediaCardProps {
   onMuteToggle?: () => void;
   activeCardId?: number | null;
   onActivate?: (id: number | null) => void;
+  isClosingRef?: React.RefObject<boolean>;
 }
 
 export default function InteractiveMediaCard({
@@ -26,6 +27,7 @@ export default function InteractiveMediaCard({
   onMuteToggle,
   activeCardId,
   onActivate,
+  isClosingRef,
 }: InteractiveMediaCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
@@ -40,7 +42,7 @@ export default function InteractiveMediaCard({
   const [isAdded, setIsAdded] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
-  // Close this card if another card becomes active
+  // Close this card if another card becomes active (desktop only — mouse hover switching)
   useEffect(() => {
     if (activeCardId !== null && activeCardId !== media.id && isHovered) {
       handleMouseLeave();
@@ -57,8 +59,8 @@ export default function InteractiveMediaCard({
 
   useEffect(() => {
     if (isHovered) {
-      document.addEventListener("pointerdown", handleClickOutside);
-      return () => document.removeEventListener("pointerdown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside, true);
+      return () => document.removeEventListener("touchstart", handleClickOutside, true);
     }
   }, [isHovered, handleClickOutside]);
 
@@ -131,8 +133,14 @@ export default function InteractiveMediaCard({
     <div
       ref={cardRef}
       className="relative flex-shrink-0 w-[180px] sm:w-[calc((100%-4px)/2)] md:w-[calc((100%-8px)/3)] min-[800px]:w-[calc((100%-12px)/4)] 4xl:w-[calc((100%-16px)/5)] min-[1280px]:w-[calc((100%-20px)/6)]"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') handleMouseEnter(); }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') handleMouseLeave(); }}
+      onTouchEnd={(e) => {
+        if (!isHovered && !isClosingRef?.current) {
+          e.preventDefault();
+          handleMouseEnter();
+        }
+      }}
     >
       {/* Base poster */}
       <div className="aspect-video rounded-sm overflow-hidden bg-[#2f2f2f]">
