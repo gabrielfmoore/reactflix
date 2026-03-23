@@ -35,10 +35,8 @@ export default function TrendingNow() {
         {items.map((item, index) => {
           const name = item.title || item.name || "Untitled";
           return (
-            <a
+            <div
               key={item.id}
-              href="#"
-              role="link"
               aria-label={`${name}, trending number ${index + 1}`}
               className="relative flex-shrink-0 cursor-pointer transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 rounded-sm"
             >
@@ -56,7 +54,7 @@ export default function TrendingNow() {
                   className="w-full h-full object-cover z-10 rounded-sm"
                 />
               </div>
-            </a>
+            </div>
           );
         })}
       </Slider>

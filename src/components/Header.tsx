@@ -27,10 +27,10 @@ const Header = () => {
   return (
     <header
       role="banner"
-      className={`${isLoggedIn ? "fixed" : "absolute max-w-[1200px] mx-auto"} top-0 left-0 right-0 z-[100] bg-[linear-gradient(180deg,rgba(0,0,0,.7)_10%,transparent)]`}
+      className={`${isLoggedIn ? "fixed" : "absolute"} top-0 left-0 right-0 z-[100] bg-[linear-gradient(180deg,rgba(0,0,0,.7)_10%,transparent)]`}
     >
-      <div className={`absolute inset-0 bg-[#141414] transition-opacity pointer-events-none ${isScrolled ? 'opacity-100 duration-100' : 'opacity-0 duration-1000'}`} aria-hidden="true" />
-      <nav aria-label="Main navigation" className="relative px-[4%] flex justify-between items-center text-white h-[41px] 3xl:h-[68px]">
+      {isLoggedIn && <div className={`absolute inset-0 bg-[#141414] transition-opacity pointer-events-none ${isScrolled ? 'opacity-100 duration-100' : 'opacity-0 duration-1000'}`} aria-hidden="true" />}
+      <nav aria-label="Main navigation" className={`relative px-[4%] flex justify-between items-center text-white h-[41px] 3xl:h-[68px] ${isLoggedIn ? "" : "max-w-[1200px] mx-auto"}`}>
         <div className="flex items-center justify-center gap-4 overflow-x-clip">
           <Link to={isLoggedIn ? "/browse" : "/"} tabIndex={isLoggedIn ? 0 : -1}>
             <img

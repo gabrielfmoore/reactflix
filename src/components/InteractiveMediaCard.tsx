@@ -272,7 +272,7 @@ export default function InteractiveMediaCard({
               </span>
             </div>
             <div className="flex mb-[2em] items-center text-white text-sm font-thin">
-              Genre Tags • Quirky • Dark Comedy
+              Genre Tags • Quirky • Offbeat
             </div>
           </div>
         </div>

@@ -72,7 +72,7 @@ const GetStarted = () => {
               />
               <div className="relative z-10 flex flex-col text-wrap sm:text-nowrap text-left mr-4">
                 <h1 className="text-xl font-bold">
-                  The Netflix you love for just $7.99.
+                  The Reactflix you love for just $7.99.
                 </h1>
                 <p className="text-[15px]">
                   Get our most affordable, ad-supported plan.
