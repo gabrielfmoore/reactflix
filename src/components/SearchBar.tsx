@@ -46,7 +46,6 @@ export default function SearchBar() {
           }`} 
           onFocus={() => setShouldShowSearch(true)}
           onBlur={handleSearchClick}
-          readOnly={!shouldShowSearch}
         />
         <button
           className={`absolute left-2 p-1 ${
