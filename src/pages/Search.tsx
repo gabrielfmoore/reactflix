@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Media } from "../types";
 import { TMDB_API_OPTIONS } from "../lib/utils";
 import InteractiveMediaCard from "../components/InteractiveMediaCard";
@@ -12,6 +12,8 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const backdropMoved = useRef(false);
 
   useEffect(() => {
     if (!query) {
@@ -64,7 +66,17 @@ export default function Search() {
       )}
 
       {!loading && results.length > 0 && (
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 min-[800px]:grid-cols-4 4xl:grid-cols-5 min-[1920px]:grid-cols-6 gap-2">
+        <div className="relative mt-6 grid grid-cols-2 md:grid-cols-3 min-[800px]:grid-cols-4 4xl:grid-cols-5 min-[1920px]:grid-cols-6 gap-2">
+          {activeCardId !== null && (
+            <div
+              className="fixed inset-0 z-[1] sm:hidden"
+              onTouchStart={() => { backdropMoved.current = false; }}
+              onTouchMove={() => { backdropMoved.current = true; }}
+              onTouchEnd={() => {
+                if (!backdropMoved.current) setActiveCardId(null);
+              }}
+            />
+          )}
           {results
             .filter((media) => media.backdrop_path)
             .map((media) => (
@@ -74,6 +86,8 @@ export default function Search() {
                   mediaType={media.media_type === "tv" ? "tv" : "movie"}
                   isMuted={isMuted}
                   onMuteToggle={() => setIsMuted((m) => !m)}
+                  activeCardId={activeCardId}
+                  onActivate={(id) => setActiveCardId(id)}
                 />
               </div>
             ))}
